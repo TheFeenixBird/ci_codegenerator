@@ -1,0 +1,17 @@
+body {
+    background-image: url('../assets/img/light_background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    font-family: 'Quicksand', sans-serif;
+    padding-top: 5rem;
+}
+
+.middle-block {
+    padding: 3rem 1.5rem;
+    text-align: center;
+}
+.other-block{
+    margin: 5rem !important;
+}
+
