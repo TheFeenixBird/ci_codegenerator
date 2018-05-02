@@ -7,6 +7,7 @@
  */
 ?>
 
-<div class="alert-success" role="alert">
-    You successfully registered !
+<div class="container">
+    <p>You successfully registered !</p>
 </div>
+

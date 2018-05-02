@@ -2,7 +2,7 @@
 <div class="other-block">
     <div class="container-fluid bg-light py-3">
 
-        <?php echo validation_errors(); ?>
+        <?php echo validation_errors('<div class="alert alert-danger">', '</div>'); ?>
         <?php echo form_open(); ?>
 
         <div class="form-group">
