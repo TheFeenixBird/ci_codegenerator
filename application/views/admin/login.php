@@ -1,5 +1,9 @@
-<h2><?php echo $title ?></h2>
+<?php if (isset($this->session->user['logged'])) {
+    header('location:https://localhost/project_CI/index.php/login/login');
+}
+?>
 
+<h2><?php echo $title ?></h2>
 <div class="other-block">
     <div class="container-fluid bg-light py-3">
         <div class="form-group">

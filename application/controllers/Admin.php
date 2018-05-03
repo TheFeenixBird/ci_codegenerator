@@ -15,6 +15,9 @@ class Admin extends CI_Controller
         parent::__construct();
         $this->load->model('admin_model');
         $this->load->helper('url_helper');
+        $this->load->helper('form');
+        $this->load->library('form_validation');
+        $this->load->library('session');
 
     }
 
@@ -23,13 +26,7 @@ class Admin extends CI_Controller
 
         $title['title'] = 'Register';
 
-        // LOAD form_validation LIBRARY
-        $this->load->library('form_validation');
-        $this->load->library('session');
-
-
         if (isset($_POST['register'])) {
-
 
             // SET_RULES
             $this->form_validation->set_rules('username', 'Username', 'required|min_length[5]|is_unique[user.username]');
@@ -55,11 +52,6 @@ class Admin extends CI_Controller
             }
 
         }
-        /*
-        if ($this->form_validation->run() ==true){
-            die('Something wrong there. Try again please');
-        }
-        */
 
         // lOAD VIEWS
         $this->load->view('templates/header', $title);
@@ -70,9 +62,6 @@ class Admin extends CI_Controller
 
     public function login()
     {
-        // LOAD session | form_validation library
-        $this->load->library('session');
-        $this->load->library('form_validation');
 
         //SET_RULES
         $this->form_validation->set_rules('username', 'Username',
@@ -81,41 +70,43 @@ class Admin extends CI_Controller
             'required|min_length[8]');
 
         // $_POST
+        /*
+                if ($this->form_validation->run() == TRUE) {
+
+                    $username = $_POST['username'];
+                    $password = sha1($_POST['password']);
 
 
-        if ($this->form_validation->run() == TRUE) {
+                    // Select USER in db
+                    $this->db->select('*');
+                    $this->db->from('user');
+                    $this->db->where(array('username' => $username, 'password' => $password));
+                    $request = $this->db->get();
 
-            $username = $_POST['username'];
-            $password = sha1($_POST['password']);
+                    $user = $request->row();
 
-            // Select USER in db
-            $this->db->select('*');
-            $this->db->from('user');
-            $this->db->where(array('username' => $username, 'password' => $password));
-            $request = $this->db->get();
+                    // Check if user exists
+                    if ($user->email) {
+                        $this->session->set_flashdata('success', 'You are now logged in');
 
+                        $_SESSION['logged'] = TRUE;
+                        $_SESSION['username'] = $user->username;
 
-            $user = $request->row();
+                    } else {
+                        $this->set_flashdata('error', 'You are not registered');
 
-            // Check if user exists
-            if ($user->email) {
-                $this->session->set_flashdata('success', 'You are now logged in');
-
-                $_SESSION['logged'] = TRUE;
-                $_SESSION['username'] = $user->username;
-
-            } else {
-                $this->set_flashdata('error', 'You are not registered');
-
-            }
+                    }
+                }
+        */
+        if ($this->form_validation->run() == FALSE) {
 
 
         }
-
-        $data['title'] = 'Login';
-        $this->load->view('templates/header', $data);
-        $this->load->view('admin/login', $data);
-        $this->load->view('templates/footer', $data);
+        $title['title'] = 'Login';
+        // LOAD VIEWS
+        $this->load->view('templates/header', $title);
+        $this->load->view('admin/login', $title);
+        $this->load->view('templates/footer', $title);
 
     }
 
