@@ -8,6 +8,8 @@
 ?>
 
 <div class="container">
-    <p>You successfully registered !</p>
+    <div class="alert alert-success">
+        <p>You successfully registered ! You can now login</p>
+    </div>
 </div>
 

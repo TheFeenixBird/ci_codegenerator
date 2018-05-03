@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="<?php echo base_url(); ?>/assets/css/bootstrap.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>/assets/style.css">
     <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 </head>
 <body>
 
