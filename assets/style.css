@@ -2,6 +2,7 @@ body {
     background-image: url(img/light_background.jpg);
     background-repeat: no-repeat;
     background-size: cover;
+
     font-family: 'Montserrat', sans-serif;
     padding-top: 5rem;
 }
@@ -13,5 +14,9 @@ body {
 
 .other-block {
     margin: 5rem !important;
+}
+
+.nickname {
+    font-size: 20px;
 }
 

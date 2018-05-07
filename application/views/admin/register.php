@@ -4,7 +4,7 @@
 
         <?php echo validation_errors('<div class="alert alert-danger">', '</div>'); ?>
         <?php echo form_open(); ?>
-
+        <?php echo $this->session->flashdata('success'); ?>
         <div class="form-group">
             <label for="Username">Username</label>
             <input type="text" class="form-control" name="username" value="" placeholder="Enter your username">
@@ -18,7 +18,7 @@
             <input type="password" class="form-control" value="" name="password" placeholder="Enter your password">
         </div>
         <div class="form-group">
-            <button type="submit" name="register" class="btn btn-success btn-lg">Register</button>
+            <button type="submit" value="register" name="register" class="btn btn-dark btn-lg">Register</button>
         </div>
     </div>
 </div>

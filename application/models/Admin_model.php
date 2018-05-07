@@ -11,25 +11,28 @@ class Admin_model extends CI_Model
 
     public function __construct()
     {
+        parent::__construct();
         $this->load->database();
     }
 
-    public function login_database()
+    public function verify_user($username, $password)
     {
-        $username = $_POST['username'];
-        $password = sha1($_POST['password']);
-
-        $this->db->select('*');
-        $this->db->from('user');
-        $this->db->where(array('username' => $username, 'password' => $password));
-        $request = $this->db->get();
-
-        if ($request->num_rows() === 1) {
+        if (password_verify($password, $this->get_password($username))) {
             return true;
         } else {
             return false;
         }
     }
 
+    public function get_password($username)
+    {
+
+        $this->db->where('username', $username);
+        $result = $this->db->get('user');
+        if ($result->num_rows() == 1) {
+            return $result->row(0)->password;
+        }
+
+    }
 
 }

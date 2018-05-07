@@ -9,6 +9,11 @@
 class Admin extends CI_Controller
 {
 
+    /*
+     *
+     * CONSTRUCT
+     *
+     */
 
     public function __construct()
     {
@@ -21,94 +26,99 @@ class Admin extends CI_Controller
 
     }
 
+    /*
+    *
+    * USER REGISTER
+    *
+    */
+
     public function register()
     {
 
-        $title['title'] = 'Register';
+        $title['title'] = "Register";
 
         if (isset($_POST['register'])) {
 
-            // SET_RULES
+            //  VERIFICATIONS
             $this->form_validation->set_rules('username', 'Username', 'required|min_length[5]|is_unique[user.username]');
             $this->form_validation->set_rules('email', 'Email', 'required|is_unique[user.email]');
             $this->form_validation->set_rules('password', 'Password',
-                'required|min_length[8]');
+                'required|min_length[5]');
 
-            // IF form_validaton SUCCESS
+            //  IF form_validaton SUCCESS
             if ($this->form_validation->run() == TRUE) {
-                $this->load->view('templates/header');
-                $this->load->view('admin/success');
 
-                // ADDS USER IN DATABASE
+                //  ADDS USER IN DATABASE
                 $data = array(
                     'username' => $_POST['username'],
                     'email' => $_POST['email'],
-                    'password' => sha1($_POST['password']),
+                    'password' => password_hash($_POST['password'], PASSWORD_BCRYPT)
                 );
 
                 $this->db->insert('user', $data);
+                $this->session->set_flashdata('success', "<div class='container'><div class='alert alert-success'><p>You successfully registered ! You can now login</p></div></div>");
 
-                $this->session->set_flashdata('message', 'Registered !');
             }
 
         }
 
-        // lOAD VIEWS
+        //  lOAD VIEWS
         $this->load->view('templates/header', $title);
         $this->load->view('admin/register', $title);
         $this->load->view('templates/footer', $title);
 
     }
 
+    /*
+    *
+    * USER LOGIN
+    *
+    */
+
     public function login()
     {
-
-        //SET_RULES
-        $this->form_validation->set_rules('username', 'Username',
-            'required|min_length[5]');
-        $this->form_validation->set_rules('password', 'Password',
-            'required|min_length[8]');
-
-        // $_POST
-        /*
-                if ($this->form_validation->run() == TRUE) {
-
-                    $username = $_POST['username'];
-                    $password = sha1($_POST['password']);
-
-
-                    // Select USER in db
-                    $this->db->select('*');
-                    $this->db->from('user');
-                    $this->db->where(array('username' => $username, 'password' => $password));
-                    $request = $this->db->get();
-
-                    $user = $request->row();
-
-                    // Check if user exists
-                    if ($user->email) {
-                        $this->session->set_flashdata('success', 'You are now logged in');
-
-                        $_SESSION['logged'] = TRUE;
-                        $_SESSION['username'] = $user->username;
-
-                    } else {
-                        $this->set_flashdata('error', 'You are not registered');
-
-                    }
-                }
-        */
-        if ($this->form_validation->run() == FALSE) {
-
-
-        }
-        $title['title'] = 'Login';
-        // LOAD VIEWS
+        $title['title'] = "Login";
         $this->load->view('templates/header', $title);
         $this->load->view('admin/login', $title);
         $this->load->view('templates/footer', $title);
 
+
+        //  verify
+        $this->form_validation->set_rules('username', 'Username',
+            'required');
+        $this->form_validation->set_rules('password', 'Password',
+            'required');
+
+        if ($this->form_validation->run()) {
+
+            $username = $_POST['username'];
+            $password = $_POST['password'];
+
+            $this->load->model('admin_model');
+
+
+            if ($username && $this->admin_model->verify_user($username, $password)) {
+                
+
+                $this->session->set_flashdata('success', "<div class='container'><div class='alert alert-success'><p>You are now logged in</p></div></div>");
+
+            } else {
+
+                $this->session->set_flashdata('error', "<div class='container'><div class='alert alert-danger'><p> $username, $password Wrong username and/or password </p></div></div>" . $_POST['password']);
+                redirect('admin/login');
+
+            }
+        }
     }
 
+    public function enter()
+    {
+        if ($this->session->userdata('username') != '') {
 
+            $this->load->view('admin/success2');
+        } else {
+
+            redirect(base_url() . 'admin/login');
+        }
+    }
 }
