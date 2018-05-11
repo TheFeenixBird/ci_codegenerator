@@ -18,9 +18,16 @@ class Admin extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        // model
         $this->load->model('admin_model');
-        $this->load->helper('url_helper');
+
+        //helper
+
+        $this->load->helper('date');
         $this->load->helper('form');
+        $this->load->helper('url_helper');
+
+        //library
         $this->load->library('form_validation');
         $this->load->library('session');
 
@@ -34,39 +41,29 @@ class Admin extends CI_Controller
 
     public function register()
     {
-
-        $title['title'] = "Register";
-
+        $data['title'] = "Register";
         if (isset($_POST['register'])) {
-
             //  VERIFICATIONS
             $this->form_validation->set_rules('username', 'Username', 'required|min_length[5]|is_unique[user.username]');
             $this->form_validation->set_rules('email', 'Email', 'required|is_unique[user.email]');
             $this->form_validation->set_rules('password', 'Password',
                 'required|min_length[5]');
-
             //  IF form_validaton SUCCESS
             if ($this->form_validation->run() == TRUE) {
-
                 //  ADDS USER IN DATABASE
-                $data = array(
+                $array = array(
                     'username' => $_POST['username'],
                     'email' => $_POST['email'],
                     'password' => password_hash($_POST['password'], PASSWORD_BCRYPT)
                 );
-
-                $this->db->insert('user', $data);
+                $this->db->insert('user', $array);
                 $this->session->set_flashdata('success', "<div class='container'><div class='alert alert-success'><p>You successfully registered ! You can now login</p></div></div>");
-
             }
-
         }
-
         //  lOAD VIEWS
-        $this->load->view('templates/header', $title);
-        $this->load->view('admin/register', $title);
-        $this->load->view('templates/footer', $title);
-
+        $this->load->view('templates/header', $data);
+        $this->load->view('admin/register', $data);
+        $this->load->view('templates/footer', $data);
     }
 
     /*
@@ -77,13 +74,17 @@ class Admin extends CI_Controller
 
     public function login()
     {
-        $title['title'] = "Login";
-        $this->load->view('templates/header', $title);
-        $this->load->view('admin/login', $title);
-        $this->load->view('templates/footer', $title);
+        $data['title'] = "Login";
+        //  Templates
+        $this->load->view('templates/header', $data);
+        $this->load->view('admin/login', $data);
+        $this->load->view('templates/footer', $data);
+
+        $this->load->model('admin_model');
+        $this->load->library('session');
 
 
-        //  verify
+        //  Validation
         $this->form_validation->set_rules('username', 'Username',
             'required');
         $this->form_validation->set_rules('password', 'Password',
@@ -98,27 +99,96 @@ class Admin extends CI_Controller
 
 
             if ($username && $this->admin_model->verify_user($username, $password)) {
-                
 
+                //  Flashdata
                 $this->session->set_flashdata('success', "<div class='container'><div class='alert alert-success'><p>You are now logged in</p></div></div>");
+
+                $id = $this->admin_model->get_user_id($username);
+                $user = $this->admin_model->get_user($id);
+
+                $sessionArray = array(
+                    'id' => $user->id,
+                    'username' => $user->username,
+                    'logged_in' => true
+
+                );
+
+                $this->session->set_userdata($sessionArray);
+
+                //var_dump($session);
+
+                // If session is active
+
+                if ($this->session->userdata('logged_in')) {
+
+                    $this->session->set_flashdata('session_success', "<div class='container'><div class='alert alert-success'><p>Session established</p></div></div>");
+                    $this->session->set_flashdata('logout_button', "<button type='submit' name='logout' class='btn btn-light btn-lg'>Logout</button>");
+                    redirect('admin/dashboard');
+
+
+                }
 
             } else {
 
-                $this->session->set_flashdata('error', "<div class='container'><div class='alert alert-danger'><p> $username, $password Wrong username and/or password </p></div></div>" . $_POST['password']);
+                $this->session->set_flashdata('error', "<div class='container'><div class='alert alert-danger'><p>Wrong username and/or password </p></div></div>");
                 redirect('admin/login');
 
             }
+
         }
+
     }
 
-    public function enter()
-    {
-        if ($this->session->userdata('username') != '') {
+    /*
+    *
+    * USER LOGOUT
+    *
+    */
 
-            $this->load->view('admin/success2');
+    public function logout()
+    {
+
+
+        if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
+
+
+            $this->session->unset_userdata('id');
+            $this->session->unset_userdata('username');
+            $this->session->unset_userdata('logged_in');
+
+            // user logout ok
+            $data['title'] = 'You are now logged out';
+            $this->load->view('templates/header');
+            $this->load->view('admin/logout_success', $data);
+            $this->load->view('templates/footer');
+
         } else {
 
-            redirect(base_url() . 'admin/login');
+            // there user was not logged in, we cannot logged him out,
+            redirect('');
         }
+
     }
+
+
+    /*
+    *
+    * USER DASHBOARD
+    *
+    */
+
+    function dashboard()
+    {
+
+        $data['title'] = 'Dashboard';
+        $data['userdata'] = $this->session->all_userdata();
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('admin/dashboard', $data);
+        $this->load->view('templates/footer', $data);
+
+        //var_dump($this->session->all_userdata());
+
+    }
+
 }

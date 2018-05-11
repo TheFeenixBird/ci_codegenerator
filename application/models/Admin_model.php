@@ -29,10 +29,27 @@ class Admin_model extends CI_Model
 
         $this->db->where('username', $username);
         $result = $this->db->get('user');
-        if ($result->num_rows() == 1) {
+        if ($result->num_rows() == 1)
             return $result->row(0)->password;
-        }
 
     }
 
+    public function get_user($id)
+    {
+
+        $this->db->from('user');
+        $this->db->where('id', $id);
+        return $this->db->get()->row();
+
+
+    }
+
+
+    public function get_user_id($username)
+    {
+        $this->db->select('*');
+        $this->db->from('user');
+        $this->db->where('username', $username);
+        return $this->db->get()->row('id');
+    }
 }

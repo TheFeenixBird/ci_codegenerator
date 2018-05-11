@@ -7,10 +7,10 @@
     <title><?php echo $title ?></title>
 
     <!-- BOOTSTRAP -->
-    <link rel="stylesheet" href="<?php echo base_url(); ?>/assets/css/bootstrap.css">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>/assets/style.css">
-    <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>/assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>/assets/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Quicksand" type="text/css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" type="text/css" rel="stylesheet">
 </head>
 <body>
 
@@ -18,6 +18,7 @@
     <nav class="nav d-flex justify-content-center fixed-top bg-light">
         <a class="nav-link text-muted" href="<?php echo base_url('index.php/admin/register'); ?>">Register</a>
         <a class="nav-link text-muted" href="<?php echo base_url('index.php/admin/login'); ?>">Login</a>
+        <a class="nav-link text-muted" href="<?php echo base_url('index.php/admin/logout'); ?>">Logout</a>
     </nav>
 </div>
 

@@ -1,5 +1,5 @@
-<h2><?php echo $title ?></h2>
-<div class="other-block">
+<h1><?php echo $title ?></h1>
+<div class="mid-middle-block">
     <div class="container-fluid bg-light py-3">
 
         <?php echo validation_errors('<div class="alert alert-danger">', '</div>'); ?>
