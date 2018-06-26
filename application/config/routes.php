@@ -56,6 +56,7 @@ $route['admin/register'] = 'admin/register';
 $route['admin/dashboard'] = 'admin/dashboard';
 $route['admin/admin'] = 'admin/admin';
 $route['admin/(:any)'] = 'admin/view/$1';
+$route['generate/input'] = 'generate/input';
 $route['default_controller'] = 'pages/view';
 $route['(:any)'] = 'pages/view/$1';
 $route['404_override'] = '';

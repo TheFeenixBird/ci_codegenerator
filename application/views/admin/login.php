@@ -25,7 +25,7 @@
             <label for="exampleInputPassword1">Password</label>
             <input type="password" name="password" class="form-control" placeholder="Enter your password">
         </div>
-        <button type="submit" name="login" class="btn btn-dark btn-lg">Login</button>
+        <button type="submit" name="login" class="btn btn-success btn-lg">Login</button>
         <?php echo $this->session->flashdata("logout_button") ?>
     </div>
 </div>

@@ -8,20 +8,20 @@
 
     <!-- BOOTSTRAP -->
     <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>/assets/css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>/assets/style.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>/assets/css/style.css">
     <link href="https://fonts.googleapis.com/css?family=Quicksand" type="text/css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Montserrat" type="text/css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300" rel="stylesheet">
 </head>
 <body>
 
 <div class="nav-scroller py-1">
     <nav class="nav d-flex justify-content-center fixed-top bg-light">
-        <a class="nav-link text-muted" href="<?php echo base_url('index.php/admin/register'); ?>">Register</a>
-        <a class="nav-link text-muted" href="<?php echo base_url('index.php/admin/login'); ?>">Login</a>
-        <a class="nav-link text-muted" href="<?php echo base_url('index.php/admin/logout'); ?>">Logout</a>
+        <a class="nav-link" href="<?php echo base_url('index.php/admin/register'); ?>">Register</a>
+        <a class="nav-link" href="<?php echo base_url('index.php/admin/login'); ?>">Login</a>
+        <a class="nav-link" href="<?php echo base_url('index.php/admin/logout'); ?>">Logout</a>
     </nav>
 </div>
 
 <div class="container">
     <div class="middle-block">
-

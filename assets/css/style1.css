@@ -1,0 +1,42 @@
+
+body {
+    font-family: 'Roboto', sans-serif;
+    height: 100%;
+    margin-top: 2rem;
+}
+
+.container{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+
+.container-fluid{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.main-title > a{
+    color: #6B7A8F;
+    text-decoration: none;
+}
+
+.main-title > a:hover{
+    color: #FF6A5C;
+    transition: all 0.7s;
+}
+
+h1{
+    text-align: center;
+}
+
+legend{
+    font-weight: bold;
+}
+
+/*  Input and Output
+.container-fluid > .fieldset{
+    border: 1px solid #DBC7AA;
+    padding: 10px;
+}
+*/

@@ -18,7 +18,7 @@
             <input type="password" class="form-control" value="" name="password" placeholder="Enter your password">
         </div>
         <div class="form-group">
-            <button type="submit" value="register" name="register" class="btn btn-dark btn-lg">Register</button>
+            <button type="submit" value="register" name="register" class="btn btn-success  btn-lg">Register</button>
         </div>
     </div>
 </div>

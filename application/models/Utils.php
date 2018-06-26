@@ -2,12 +2,10 @@
 /**
  * Created by PhpStorm.
  * User: Workspace
- * Date: 06/05/2018
- * Time: 21:25
+ * Date: 18/05/2018
  */
 
-class Login
+class Utils
 {
-
 
 }

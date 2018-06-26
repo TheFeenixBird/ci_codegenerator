@@ -1,12 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Workspace
- * Date: 02/05/2018
- * Time: 09:42
- */
 
-class Admin_model extends CI_Model
+class Auth_Model extends CI_Model
 {
 
     public function __construct()
@@ -29,8 +23,9 @@ class Admin_model extends CI_Model
 
         $this->db->where('username', $username);
         $result = $this->db->get('user');
-        if ($result->num_rows() == 1)
+        if ($result->num_rows() == 1) {
             return $result->row(0)->password;
+        }
 
     }
 
@@ -41,9 +36,7 @@ class Admin_model extends CI_Model
         $this->db->where('id', $id);
         return $this->db->get()->row();
 
-
     }
-
 
     public function get_user_id($username)
     {
